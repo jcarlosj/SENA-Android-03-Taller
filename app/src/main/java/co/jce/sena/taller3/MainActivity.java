@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
         //-> Declaramos variables locales
         ArrayList<Obra> existenRegistros = null;
-        crudObras = new CRUDObras( MainActivity.this );     //: Instancia para el CRUD
+        crudObras = new CRUDObras( this );     //: Instancia para el CRUD
 
         //-> Accedemos a los componentes del "Activity".
         lvObras = ( ListView ) findViewById( R .id .lvObras );      //: ListView
@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         lvObras .setOnItemClickListener( new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                crudObras .opciones( position, alObra );
+                crudObras .opciones( view, position, alObra);
             }
         });
 

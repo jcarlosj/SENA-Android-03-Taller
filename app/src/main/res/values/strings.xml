@@ -1,6 +1,15 @@
 <resources>
     <string name="app_name">Taller 3</string>
+    <string name="agregar_obra">Agregar obra</string>
+    <string name="anio_edicion">Año de edición</string>
+    <string name="argumento">Argumento</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="guardar">Guardar</string>
     <string name="opciones">Opciones</string>
+    <string name="seleccione_autor">Seleccione autor</string>
+    <string name="seleccione_epoca">Seleccione época</string>
+    <string name="seleccione_genero">Seleccione genero</string>
+    <string name="título_obra">Título de la obra</string>
     <string-array name="acciones">
         <item>Agregar</item>
         <item>Editar</item>
