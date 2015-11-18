@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Taller 3</string>
+    <string name="opciones">Opciones</string>
+    <string-array name="acciones">
+        <item>Agregar</item>
+        <item>Editar</item>
+        <item>Mostrar</item>
+        <item>Eliminar</item>
+        <item>Cancelar</item>
+    </string-array>
 </resources>

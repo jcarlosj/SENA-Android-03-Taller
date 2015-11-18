@@ -1,8 +1,13 @@
 package co.jce.sena.taller3;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -23,6 +28,10 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Obra> alObra;
     private ArrayList<String[]> alObras;
     private ObrasAdapter adaptadorObras;
+
+    //-> Atributos (Especiales)
+    private AlertDialog .Builder adbVentana;
+    private Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +61,14 @@ public class MainActivity extends AppCompatActivity {
             //-> Asociamos el "Adapter" con el "ListView".
             lvObras .setAdapter( adaptadorObras );
         }
+
+        //-> Agregamos el escuchador al "ListView"
+        lvObras .setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                lanzaVentanaDeDialogo(position);
+            }
+        });
 
     }
 
@@ -84,6 +101,40 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return alObra;
+    }
+
+    private void lanzaVentanaDeDialogo( final int posicion ) {
+
+        //-> Se instancia (crea) la ventana de dialogo
+        adbVentana = new AlertDialog.Builder( this );
+
+        //-> Se dan características a la ventana de dialogo una vez creada.
+        adbVentana .setTitle( R .string .opciones )
+                .setItems( R .array .acciones, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // The 'which' argument contains the index position
+                        // of the selected item
+                        if ( which == 0 ) {
+                            Toast .makeText(MainActivity.this, "Elegiste agregar", Toast.LENGTH_SHORT) .show();
+                        }
+                        if ( which == 1 ) {
+                            Toast .makeText( MainActivity.this, "Elegiste editar", Toast .LENGTH_SHORT ) .show();
+                        }
+                        if ( which == 2 ) {
+                            Toast .makeText( MainActivity.this, "Elegiste mostrar", Toast .LENGTH_SHORT ) .show();
+                        }
+                        if ( which == 3 ) {
+                            Toast .makeText( MainActivity.this, "Elegiste eliminar", Toast .LENGTH_SHORT ) .show();
+                        }
+                        if ( which == 4 ) {
+                            Toast .makeText( MainActivity.this, "Elegiste cancelar", Toast .LENGTH_SHORT ) .show();
+                        }
+                    }
+                });
+
+        //-> Se crea y muestra la ventana.
+        dialog = adbVentana .create();
+        dialog .show();
     }
 
 }
