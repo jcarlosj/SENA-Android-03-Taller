@@ -1,8 +1,5 @@
 package co.jce.sena.taller3;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -16,6 +13,7 @@ import java.util.concurrent.ExecutionException;
 
 import co.jce.sena.adapters.ObrasAdapter;
 import co.jce.sena.estructurasdatos.Obra;
+import co.jce.sena.operaciones.CRUDObras;
 import co.jce.sena.operaciones.Convertir;
 import co.jce.sena.tasks.ListarObras;
 
@@ -28,10 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Obra> alObra;
     private ArrayList<String[]> alObras;
     private ObrasAdapter adaptadorObras;
-
-    //-> Atributos (Especiales)
-    private AlertDialog .Builder adbVentana;
-    private Dialog dialog;
+    private CRUDObras crudObras;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
         //-> Declaramos variables locales
         ArrayList<Obra> existenRegistros = null;
+        crudObras = new CRUDObras( MainActivity.this );     //: Instancia para el CRUD
 
         //-> Accedemos a los componentes del "Activity".
         lvObras = ( ListView ) findViewById( R .id .lvObras );      //: ListView
@@ -63,10 +59,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //-> Agregamos el escuchador al "ListView"
-        lvObras .setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        lvObras .setOnItemClickListener( new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                lanzaVentanaDeDialogo(position);
+                crudObras .opciones( position, alObra );
             }
         });
 
@@ -101,40 +97,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return alObra;
-    }
-
-    private void lanzaVentanaDeDialogo( final int posicion ) {
-
-        //-> Se instancia (crea) la ventana de dialogo
-        adbVentana = new AlertDialog.Builder( this );
-
-        //-> Se dan características a la ventana de dialogo una vez creada.
-        adbVentana .setTitle( R .string .opciones )
-                .setItems( R .array .acciones, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // The 'which' argument contains the index position
-                        // of the selected item
-                        if ( which == 0 ) {
-                            Toast .makeText(MainActivity.this, "Elegiste agregar", Toast.LENGTH_SHORT) .show();
-                        }
-                        if ( which == 1 ) {
-                            Toast .makeText( MainActivity.this, "Elegiste editar", Toast .LENGTH_SHORT ) .show();
-                        }
-                        if ( which == 2 ) {
-                            Toast .makeText( MainActivity.this, "Elegiste mostrar", Toast .LENGTH_SHORT ) .show();
-                        }
-                        if ( which == 3 ) {
-                            Toast .makeText( MainActivity.this, "Elegiste eliminar", Toast .LENGTH_SHORT ) .show();
-                        }
-                        if ( which == 4 ) {
-                            Toast .makeText( MainActivity.this, "Elegiste cancelar", Toast .LENGTH_SHORT ) .show();
-                        }
-                    }
-                });
-
-        //-> Se crea y muestra la ventana.
-        dialog = adbVentana .create();
-        dialog .show();
     }
 
 }
