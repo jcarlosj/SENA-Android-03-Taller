@@ -14,7 +14,7 @@ import java.util.concurrent.ExecutionException;
 import co.jce.sena.adapters.ObrasAdapter;
 import co.jce.sena.estructurasdatos.Obra;
 import co.jce.sena.operaciones.CRUDObras;
-import co.jce.sena.operaciones.Convertir;
+import co.jce.sena.operaciones.ProcesarDatos;
 import co.jce.sena.tasks.ListarObras;
 
 public class MainActivity extends AppCompatActivity {
@@ -59,10 +59,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //-> Agregamos el escuchador al "ListView"
-        lvObras .setOnItemClickListener( new AdapterView.OnItemClickListener() {
+        lvObras .setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                crudObras .opciones( view, position, alObra);
+                crudObras.opciones(view, position, alObra);
             }
         });
 
@@ -89,11 +89,11 @@ public class MainActivity extends AppCompatActivity {
 
         //-> Valida si la cadena de retorno esta vacia.
         if( salida != ""  ) {
-            //-> Convierte una cadena a un ArrayList<String[]>
-            alObras = Convertir .cadenaEnArrayListDeArray( salida );
 
-            //-> Convierte un ArrayList<String[]> a un ArrayList<Empleado>
-            alObra = Convertir .arrayListDeArrayEnArrayListEmpleado( alObras );
+            //-> Segmenta la cadena obtenida de la Base de Datos
+            ProcesarDatos pDatos = new ProcesarDatos();
+            alObra = pDatos .getArrayListObra(pDatos.segmentar(salida, 2));
+
         }
 
         return alObra;
